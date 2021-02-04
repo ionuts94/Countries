@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""
+    />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin="">
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/all.css">
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <!----------------------------Map Container-------------------------------->
+    <div id="mapid" style="height: 100vh;">
+    </div>
+    
+    <!----------------------------Main Container------------------------------->
+    <select id="selectButton" name="countries">
+    </select>
+
+    <div id="mainContainer">
+        <div class="tags">
+            <h2 id="weatherBtn" class="buttonOnLoad">Weather</h2>
+            <div class="infos hide" id="weatherInfo" style="padding: 1px;">
+                <table class="weatherDesktopTable">
+                    <tr class="odd">
+                        <td class="tdWidth20 centerText"><i class="fas fa-temperature-low"></i></td>
+                        <td class="tdWidth60"><p id="weatherD1">Temp</p></td>
+                        <td class="tdWidth20"><p class="values" id="weatherD1Value">values</p></td>
+                    </tr>
+                    <tr>
+                        <td class="centerText tdWidth20"><i class="fas fa-thermometer"></i></td>
+                        <td><p id="weatherD2">Feels like</p></td>
+                        <td><p class="values" id="weatherD2Value">values</p></td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="centerText tdWidth20"><i class="fas fa-compress-alt"></i></td>
+                        <td><p id="weatherD3">Pressure</p></td>
+                        <td><p class="values" id="weatherD3Value">values</p></td>
+                    </tr>
+                    <tr>
+                        <td class="centerText tdWidth20"><i class="fas fa-tint"></i></td>
+                        <td><p id="weatherD4">Humidity</p></td>
+                        <td><p class="values" id="weatherD4Value">values</p></td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="centerText tdWidth20"><i class="fas fa-wind"></i></td>
+                        <td><p id="weatherD5">Wind Speed</p></td>
+                        <td><p class="values" id="weatherD5Value">values</p></td>
+                    </tr>
+                    <tr>
+                        <td class="centerText tdWidth20"><i class="fas fa-sun"></i></td>
+                        <td><p id="weatherD6">Sunrise</p></td>
+                        <td><p class="values" id="weatherD6Value">values</p></td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="centerText tdWidth20"><i class="fas fa-moon"></i></td>
+                        <td><p id="weatherD7">Sunset</p></td>
+                        <td><p class="values" id="weatherD7Value">values</p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="tags">
+            <h2 id="infoBtn" class="buttonOnLoad">Country Info</h2>
+            <div class="infos hide" id="countryInfo">
+                <table class="weatherDesktopTable">
+                    <tr class="odd">
+                        <td class="tdWidth20 centerText"><i class="fas fa-chart-area"></i></td>
+                        <td class="tdWidth50"><p>Area</p></td>
+                        <td class="tdWidth30"><p id="countryArea">value</p></td>
+                    </tr>
+                    <tr>
+                        <td class="tdWidth20 centerText"><i class="fas fa-building"></i></td>
+                        <td class="tdWidth50"><p>Capital</p></td>
+                        <td class="tdWidth30"><p id="countryCapital">value</p></td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="tdWidth20 centerText"><i class="fas fa-user-friends"></i></td>
+                        <td class="tdWidth50"><p>Population</p></td>
+                        <td class="tdWidth30"><p id="countryPopulation">value</p></td>
+                    </tr>
+                    <tr>
+                        <td class="tdWidth20 centerText"><i class="fas fa-money-bill-wave-alt"></i></td>
+                        <td class="tdWidth50"><p>Currency</p></td>
+                        <td class="tdWidth30"><p id="countryCurrency">value</p></td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="tdWidth20 centerText"><i class="fas fa-history"></i></td>
+                        <td class="tdWidth50"><p>Timezone</p></td>
+                        <td class="tdWidth30"><p id="countryTimezone">value</p></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="tags">
+            <h2 id="livingBtn" class="buttonOnLoad">COVID-19 Situation</h2>
+            <div class="infos hide" id="livingCostInfo">
+                <table class='weatherDesktopTable'>
+                    <tr class="odd">
+                        <td class="tdWidth20 centerText"><i class="fas fa-flag"></i></td>
+                        <td class="tdWidth50"><p>Country</p></td>
+                        <td class="tdWidth30"><p class='values' id="covidCountry">value</p></td>
+                    </tr>
+                    <tr>
+                        <td class="tdWidth20 centerText"><i class="fas fa-check-double"></i></td>
+                        <td class="tdWidth50"><p>Confirmed</p></td>
+                        <td class="tdWidth30"><p id="covidConfirmed">value</p></td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="tdWidth20 centerText"><i class="fas fa-procedures"></i></td>
+                        <td class="tdWidth50"><p>Critical</p></td>
+                        <td class="tdWidth30"><p id="covidCritical">value</p></td>
+                    </tr>
+                    <tr>
+                        <td class="tdWidth20 centerText"><i class="fas fa-hand-holding-heart"></i></td>
+                        <td class="tdWidth50"><p>Recovered</p></td>
+                        <td class="tdWidth30"><p id="covidRecovered" class="values">value</p></td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="tdWidth20 centerText"><i class="fas fa-book-dead"></i></td>
+                        <td class="tdWidth50"><p>Deaths</p></td>
+                        <td class="tdWidth30"><p id="covidDeaths">value</p></td>
+                    </tr>
+                    <tr>
+                        <td class="tdWidth20 centerText"><i class="fas fa-clock"></i></td>
+                        <td class="tdWidth50"><p>Latest Update</p></td>
+                        <td class="tdWidth30"><p id="covidUpdate" class="values">values</p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="tags">
+            <h2 id="flagBtn" class="buttonOnLoad">Flag</h2>
+            <div class="infos hide" id="flagInfo">
+                <img id="flagImg" alt="flag">
+            </div>
+        </div>
+    </div>
+
+    <!-----------------------Second Container---------------------------------->
+    <div id="secondContainer">
+        <i id="phoneWeatherBtn" class="fas fa-cloud-sun-rain buttonIcons"></i><br />
+        <i id="phoneInfoBtn" class="fas fa-info buttonIcons"></i><br />
+        <i id="phoneLivingBtn" class="fas fa-head-side-mask buttonIcons"></i><br>
+        <i id="phoneFlagBtn" class="fas fa-flag buttonIcons"></i><br>
+    </div>
+    <div id="phoneTagsInfoContainer" class="hide">
+        <div id="phoneWeatherInfo" class="phoneInfoContainer hide">
+            <table class="weatherDesktopTable">
+                <tr class="odd">
+                    <td class="tdWidth20 centerText"><i class="fas fa-temperature-low"></i></td>
+                    <td class="tdWidth60"><p id="weatherD1">Temp</p></td>
+                    <td class="tdWidth20"><p class="values" id="weatherP1Value">values</p></td>
+                </tr>
+                <tr>
+                    <td class="centerText tdWidth20"><i class="fas fa-thermometer"></i></td>
+                    <td><p id="weatherD2">Feels like</p></td>
+                    <td><p class="values" id="weatherP2Value">values</p></td>
+                </tr>
+                <tr class="odd">
+                    <td class="centerText tdWidth20"><i class="fas fa-compress-alt"></i></td>
+                    <td><p id="weatherD3">Pressure</p></td>
+                    <td><p class="values" id="weatherP3Value">values</p></td>
+                </tr>
+                <tr>
+                    <td class="centerText tdWidth20"><i class="fas fa-tint"></i></td>
+                    <td><p id="weatherD4">Humidity</p></td>
+                    <td><p class="values" id="weatherP4Value">values</p></td>
+                </tr>
+                <tr class="odd">
+                    <td class="centerText tdWidth20"><i class="fas fa-wind"></i></td>
+                    <td><p id="weatherD5">Wind Speed</p></td>
+                    <td><p class="values" id="weatherP5Value">values</p></td>
+                </tr>
+                <tr>
+                    <td class="centerText tdWidth20"><i class="fas fa-sun"></i></td>
+                    <td><p id="weatherD6">Sunrise</p></td>
+                    <td><p class="values" id="weatherP6Value">values</p></td>
+                </tr>
+                <tr class="odd">
+                    <td class="centerText tdWidth20"><i class="fas fa-moon"></i></td>
+                    <td><p id="weatherD7">Sunset</p></td>
+                    <td><p class="values" id="weatherP7Value">values</p></td>
+                </tr>
+            </table>
+        </div>
+        <div id="phoneCountryInfo" class="phoneInfoContainer hide">
+            <table class="weatherDesktopTable">
+                <tr class="odd">
+                    <td class="tdWidth20 centerText"><i class="fas fa-chart-area"></i></td>
+                    <td class="tdWidth50"><p>Area</p></td>
+                    <td class="tdWidth30"><p id="phoneCountryArea">value</p></td>
+                </tr>
+                <tr>
+                    <td class="tdWidth20 centerText"><i class="fas fa-building"></i></td>
+                    <td class="tdWidth50"><p>Capital</p></td>
+                    <td class="tdWidth30"><p id="phoneCountryCapital">value</p></td>
+                </tr>
+                <tr class="odd">
+                    <td class="tdWidth20 centerText"><i class="fas fa-user-friends"></i></td>
+                    <td class="tdWidth50"><p>Population</p></td>
+                    <td class="tdWidth30"><p id="phoneCountryPopulation">value</p></td>
+                </tr>
+                <tr>
+                    <td class="tdWidth20 centerText"><i class="fas fa-money-bill-wave-alt"></i></td>
+                    <td class="tdWidth50"><p>Currency</p></td>
+                    <td class="tdWidth30"><p id="phoneCountryCurrency">value</p></td>
+                </tr>
+                <tr class="odd">
+                    <td class="tdWidth20 centerText"><i class="fas fa-history"></i></td>
+                    <td class="tdWidth50"><p>Timezone</p></td>
+                    <td class="tdWidth30"><p id="phoneCountryTimezone">value</p></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div id="phoneLivingInfo" class="phoneInfoContainer hide">
+            <table class='weatherDesktopTable'>
+                <tr class="odd">
+                    <td class="tdWidth20 centerText"><i class="fas fa-flag"></i></td>
+                    <td class="tdWidth50"><p>Country</p></td>
+                    <td class="tdWidth30"><p class='values' id="phoneCovidCountry">value</p></td>
+                </tr>
+                <tr>
+                    <td class="tdWidth20 centerText"><i class="fas fa-check-double"></i></td>
+                    <td class="tdWidth50"><p>Confirmed</p></td>
+                    <td class="tdWidth30"><p id="phoneCovidConfirmed">value</p></td>
+                </tr>
+                <tr class="odd">
+                    <td class="tdWidth20 centerText"><i class="fas fa-procedures"></i></td>
+                    <td class="tdWidth50"><p>Critical</p></td>
+                    <td class="tdWidth30"><p id="phoneCovidCritical">value</p></td>
+                </tr>
+                <tr>
+                    <td class="tdWidth20 centerText"><i class="fas fa-hand-holding-heart"></i></td>
+                    <td class="tdWidth50"><p>Recovered</p></td>
+                    <td class="tdWidth30"><p id="phoneCovidRecovered" class="values">value</p></td>
+                </tr>
+                <tr class="odd">
+                    <td class="tdWidth20 centerText"><i class="fas fa-book-dead"></i></td>
+                    <td class="tdWidth50"><p>Deaths</p></td>
+                    <td class="tdWidth30"><p id="phoneCovidDeaths">value</p></td>
+                </tr>
+                <tr>
+                    <td class="tdWidth20 centerText"><i class="fas fa-clock"></i></td>
+                    <td class="tdWidth50"><p>Latest Update</p></td>
+                    <td class="tdWidth30"><p id="phoneCovidUpdate" class="values">values</p></td>
+                </tr>
+            </table>
+        </div>
+        <div id="phoneFlagInfo" class="phoneInfoContainer hide">
+            <img id="phoneFlagImg" alt="flag">
+        </div>
+            
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script src="libs/scripts/buttonsFunctionality.js"></script>
+    <script src="libs/scripts/reqs.js"></script>
+</body>
+</html>
